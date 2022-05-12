@@ -1,0 +1,28 @@
+{
+  "contacts": [
+    {
+      "name": "Chandra",
+      "email": "Chandra@gmail.com",
+      "contact": "8801012900",
+      "id": 1
+    },
+    {
+      "name": "Vamsi",
+      "email": "Vamsi@gmail.com",
+      "contact": "8801012911",
+      "id": 2
+    },
+    {
+      "name": "Chandu",
+      "email": "Chandu@gmail.com",
+      "contact": "8801012922",
+      "id": 3
+    },
+    {
+      "name": "Vishal",
+      "email": "Vishal@gmail.com",
+      "contact": "8801012933",
+      "id": 4
+    }
+  ]
+}
