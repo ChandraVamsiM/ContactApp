@@ -2,14 +2,14 @@
   width: 30%;
   display: flex;
   flex-direction: column;
-  border: 1px red solid;
-  align-content: center;
+  border: 1px rgb(7, 7, 7) solid;
+  align-content: left;
   margin: 0 auto;
 }
 
 .card-header {
   height: 30%;
-  background: #5d6770;
+  background: #0d0d0e;
   color: white;
   text-align: center;
 }

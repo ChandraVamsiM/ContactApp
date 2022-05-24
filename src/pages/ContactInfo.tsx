@@ -1,3 +1,4 @@
+import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
@@ -27,6 +28,10 @@ const ContactInfo = () => {
           <br />
           <strong>Name: </strong>
           <span>{data && data.name}</span>
+          <br />
+          <br />
+          <strong>Date Of Birth: </strong>
+          <span>{data && data.dateOfBirth}</span>
           <br />
           <br />
           <strong>Email: </strong>

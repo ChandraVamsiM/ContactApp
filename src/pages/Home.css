@@ -8,7 +8,7 @@
 }
 
 .styled-table thead tr {
-  background-color: #009879;
+  background-color: #070707;
   color: #ffffff;
   text-align: left;
 }
@@ -27,7 +27,7 @@
 }
 
 .styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid #5a8d08;
 }
 
 .btn {
@@ -58,4 +58,9 @@
 
 .btn-add {
   background-color: #f45646;
+}
+
+.btn-reset {
+  background-color: rgb(9, 97, 148);
+  color: white;
 }

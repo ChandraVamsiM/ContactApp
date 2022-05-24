@@ -1,5 +1,6 @@
 input[type="text"],
 input[type="email"],
+input[type="date"],
 input[type="number"],
 select {
   width: 100%;
@@ -8,6 +9,7 @@ select {
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
+  align-items: left;
   box-sizing: border-box;
 }
 
@@ -24,4 +26,76 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
   background-color: #45a049;
+}
+
+.name,
+.dateOfBirth,
+.email,
+.contact {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.616);
+  text-align: left;
+  float: left;
+}
+
+.form {
+  width: 100%;
+  max-width: 32rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.label {
+  margin-bottom: 1rem;
+}
+
+.label > span {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.label > input,
+.label > select {
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  border-radius: 6px;
+}
+
+button.cta {
+  background-color: rgb(3, 128, 135);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.error {
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  color: red;
+}
+
+p {
+  text-align: left;
+  color: #c51244 !important;
+}
+
+p::before {
+  display: inline;
+  content: "⚠ ";
 }

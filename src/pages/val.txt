@@ -1,0 +1,208 @@
+const validate = (values: any) => {
+    const errors = { name, dateOfBirth, email, contact };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!values.name) {
+      errors.name = "name is required!";
+    } else if (name.length > 15) {
+      errors.name = "Name should be less than 15 Letters";
+    }
+    if (!values.dateOfBirth) {
+      errors.dateOfBirth = "Date Of Birth is required!";
+    }
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!emailRegex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    if (!values.contact) {
+      errors.contact = "Contact is required!";
+    }
+    return errors;
+  };
+
+  setFormErrors(() => validate(formValues));
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formErrors]);
+
+  <p>{(formErrors as any).name}</p>
+
+
+  import { useState, useEffect } from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import {
+  useAddContactMutation,
+  useContactQuery,
+  useUpdateContactMutation,
+} from "../services/contactsApi";
+import "./AddEditContact.css";
+
+const AddEditContact = () => {
+  const initialState = {
+    name: "",
+    dateOfBirth: "",
+    email: "",
+    contact: "",
+  };
+  const [formValues, setFormValues] = useState(initialState);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [addContact] = useAddContactMutation();
+  const [updateContact] = useUpdateContactMutation();
+  const { name, dateOfBirth, email, contact } = formValues;
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const { data, error, isLoading, isFetching } = useContactQuery(id!);
+
+  useEffect(() => {
+    if (id) {
+      setEditMode(true);
+      if (data) {
+        setFormValues({ ...data });
+      }
+    } else {
+      setEditMode(false);
+      if (data) {
+        setFormValues({ ...initialState });
+      }
+    }
+  }, [id, data]);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setFormErrors(() => validate(formValues));
+    const emailregex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const contactregex = /^([+]\d{2}[ ])?\d{10}$/;
+    if (!name && !email && !contact) {
+      toast.error("Please provide value into each input field");
+    } else if (name.length > 15) {
+      toast.error("Name should be less than 15 Letters");
+    } else if (!email) {
+      toast.error("Email Cannot Be Empty!");
+    } else if (!emailregex.test(email)) {
+      toast.error("This is not a valid email format!");
+    } else if (!contact) {
+      toast.error("Contact Number Cannot Be Empty!");
+    } else if (!contactregex.test(contact)) {
+      toast.error("This is not a valid contact Number!");
+    } else {
+      if (!editMode) {
+        await addContact(formValues);
+        navigate("/");
+        toast.success("Contact Added Successfully");
+      } else {
+        await updateContact(formValues);
+        navigate("/");
+        setEditMode(false);
+        toast.success("Contact Updated Successfully");
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formErrors]);
+  const handleInputChange = (e: any) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const validate = (values: any) => {
+    const errors = { name, dateOfBirth, email, contact };
+    if (
+      !values.name &&
+      !values.dateOfBirth &&
+      !values.email &&
+      !values.contact
+    ) {
+      errors.name = "name is required!";
+    }
+    if (!values.dateOfBirth) {
+      errors.dateOfBirth = "Date Of Birth is required!";
+    }
+    if (!values.email) {
+      errors.email = "Email is required!";
+    }
+    if (!values.contact) {
+      errors.contact = "Contact is required!";
+    }
+    return errors;
+  };
+
+  return (
+    <div style={{ marginTop: "100px" }}>
+      <form
+        style={{
+          margin: "auto",
+          padding: "15px",
+          maxWidth: "400px",
+          alignContent: "center",
+        }}
+        onSubmit={handleSubmit}
+      >
+        <div>
+          <label className="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Name..."
+            value={name || ""}
+            onChange={handleInputChange}
+          />
+        </div>
+        <p>{(formErrors as any).name}</p>
+        <label className="dateOfBirth">Date Of Birth</label>
+        <input
+          type="date"
+          id="dateOfBirth"
+          name="dateOfBirth"
+          placeholder="DOB..."
+          value={dateOfBirth || ""}
+          onChange={handleInputChange}
+        />
+        <p>{(formErrors as any).dateOfBirth}</p>
+        <label className="email">Email</label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          placeholder="Email..."
+          value={email || ""}
+          onChange={handleInputChange}
+        />
+        <p>{(formErrors as any).email}</p>
+        <label className="contact">Contact</label>
+        <input
+          type="text"
+          id="contact"
+          name="contact"
+          placeholder="Contact No....."
+          value={contact || ""}
+          onChange={handleInputChange}
+        />
+        <p>{(formErrors as any).contact}</p>
+        <input type="submit" value={id ? "Update" : "Save"} />
+      </form>
+      <Link to="/">
+        <button className="btn btn-edit">Go Back</button>
+      </Link>
+    </div>
+  );
+};
+
+export default AddEditContact;
+
