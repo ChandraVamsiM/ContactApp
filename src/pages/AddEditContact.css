@@ -86,16 +86,30 @@ button.cta {
 
 .error {
   margin-top: -1rem;
+  text-align: left;
   margin-bottom: 1rem;
   color: red;
 }
-
-p {
-  text-align: left;
-  color: #c51244 !important;
+.invalid {
+  border: 1px solid #c51244 !important;
+  background-color: #eecece;
+}
+input,
+textarea {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-p::before {
+.text-danger {
+  text-align: left;
+  align-items: left;
+  color: #c51244 !important;
+  font-size: smaller;
+}
+
+.text-danger::before {
   display: inline;
+  text-align: left;
+  align-items: left;
   content: "⚠ ";
 }

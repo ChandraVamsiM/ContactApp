@@ -63,6 +63,7 @@ const AddEditContact = () => {
 
   const handleOnSubmit = async (data: FormValues) => {
     console.log(data);
+    reset();
 
     if (!editMode) {
       await addContact(formValues);
@@ -106,6 +107,7 @@ const AddEditContact = () => {
           <input
             type="text"
             id="name"
+            className={`form-control ${errors.name && "invalid"}`}
             placeholder="Name..."
             {...register("name", {
               required: "Name is required",
@@ -113,39 +115,42 @@ const AddEditContact = () => {
                 value: 15,
                 message: "Name Should not exceed 15 characters",
               },
+              minLength: {
+                value: 3,
+                message: "Name Cannot be too Short!",
+              },
               pattern: {
                 value: /(?! $)[a-zA-Z ]/,
                 message: "Name Should not Contain Numbers",
               },
             })}
-            onChange={handleInputChange}
+            onKeyUp={handleInputChange}
           />
         </div>
-        <ErrorMessage
-          className="error-message"
-          errors={errors}
-          name="name"
-          as="p"
-        />
+        {errors.name && <p className="text-danger">{errors.name.message}</p>}
         <div>
           <label className="dateOfBirth">Date Of Birth</label>
           <input
             type="date"
+            className={`form-control ${errors.dateOfBirth && "invalid"}`}
             id="dateOfBirth"
             placeholder="DOB..."
             {...register("dateOfBirth", {
               required: "Please Enter Date Of Birth",
             })}
-            onChange={handleInputChange}
+            onKeyUp={handleInputChange}
           />
         </div>
-        <ErrorMessage errors={errors} name="dateOfBirth" as="p" />
+        {errors.dateOfBirth && (
+          <p className="text-danger">{errors.dateOfBirth.message}</p>
+        )}
 
         <label className="email">Email</label>
         <input
           type="text"
           id="email"
-          aria-invalid={errors.email ? "true" : "false"}
+          className={`form-control ${errors.email && "invalid"}`}
+          placeholder="example@mail.com"
           {...register("email", {
             required: "email is required",
             pattern: {
@@ -153,19 +158,15 @@ const AddEditContact = () => {
               message: "Please Enter Valid Email",
             },
           })}
-          onChange={handleInputChange}
+          onKeyUp={handleInputChange}
         />
-        <ErrorMessage
-          className="error-message"
-          errors={errors}
-          name="email"
-          as="p"
-        />
+        {errors.email && <p className="text-danger">{errors.email.message}</p>}
         <label className="contact">Contact</label>
         <input
           type="text"
           id="contact"
           placeholder="Mobile No....."
+          className={`form-control ${errors.contact && "invalid"}`}
           {...register("contact", {
             required: "Mobile Number is required",
             pattern: {
@@ -173,9 +174,11 @@ const AddEditContact = () => {
               message: "Please Enter Valid Mobile Number",
             },
           })}
-          onChange={handleInputChange}
+          onKeyUp={handleInputChange}
         />
-        <ErrorMessage errors={errors} name="contact" as="p" />
+        {errors.contact && (
+          <p className="text-danger">{errors.contact.message}</p>
+        )}
         <input type="submit" value={id ? "Update" : "Save"} />
       </form>
 
